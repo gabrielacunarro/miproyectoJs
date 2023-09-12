@@ -20,20 +20,25 @@ body {
 
 header {
     width: 100%;
-    height: 80%;
     text-align: center;
     background-color: rgb(129, 187, 250);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-radius: 5px;
 }
+
 
 h1 {
-    margin: 20px 0 0 20px;
+    margin: 10px 0 15px 20px;
 }
 
+/* FORMULARIO */
 form {
-    margin-top: 50px;
+    margin-top: 200px;
     border: 3px solid #ccc;
     padding: 20px;
-    background-image: url(./assets/camion.jpg);
+    background-image: url(../assets/camion.jpg);
     background-position: center;
     background-size: cover;
     border-radius: 5px;
@@ -43,6 +48,7 @@ form {
     flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
+    
 }
 
 label, input {
@@ -73,19 +79,6 @@ button:hover {
     background-color: rgb(240, 77, 72);
 }
 
-.footer {
-    width: 100%;
-    height: 100%;
-    background-color: rgb(240, 77, 72);
-    text-align: center;
-    
-}
-
-.footer p {
-    margin-top: 40px;
-}
-
-
 label{
     font-weight: 800;
     color: #fff;
@@ -107,10 +100,31 @@ input[type="number"]::-webkit-outer-spin-button {
     appearance: none;
     margin: 0;
 }
+
+
+/* FOOTER */
+.footer {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(240, 77, 72);
+    text-align: center;
+    border-radius: 5px;
+}
+
+.footer p {
+    margin: 20px 0 20px;
+}
+
+
+
 /* Estilo para el historial de cotizaciones */
 #historial-lista {
     list-style-type: none;
     padding: 0;
+}
+
+#borrar-historial{
+    margin-bottom: 30px;
 }
 
 #historial-lista li {
@@ -125,6 +139,7 @@ input[type="number"]::-webkit-outer-spin-button {
     height: 80%;
     background-color: rgb(240, 77, 72);
     transition: font-size 0.5s ease-in-out; 
+    border-radius: 5px;
 }
 
 

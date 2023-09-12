@@ -1,3 +1,4 @@
+//tabla de km entre destinos-origenes
 const distancias = {
     "Buenos Aires": {
         "Chubut": 1730,
@@ -6,6 +7,14 @@ const distancias = {
         "Mendoza": 1000,
         "Misiones": 1150,
         "Santa Fé": 638
+    },
+    "Chubut": {
+        "Buenos Aires": 1730,
+        "Córdoba": 1817,
+        "Jujuy": 2726,
+        "Mendoza": 1522,
+        "Misiones": 2853,
+        "Santa Fé": 1996
     },
     "Córdoba": {
         "Buenos Aires": 700,
@@ -23,6 +32,22 @@ const distancias = {
         "Misiones": 1978,
         "Santa Fé": 638
     },
+    "Misiones": {
+        "Buenos Aires": 1150,
+        "Chubut": 2853,
+        "Córdoba": 1294,
+        "Jujuy": 1365,
+        "Mendoza": 1978,
+        "Santa Fé": 922
+    },
+    "Jujuy": {
+        "Buenos Aires": 1526,
+        "Chubut": 2726,
+        "Córdoba": 901,
+        "Mendoza": 1458,
+        "Misiones": 1365, 
+        "Santa Fé": 1055
+    },
     "Santa Fé": {
         "Buenos Aires": 638,
         "Chubut": 1996,
@@ -31,10 +56,11 @@ const distancias = {
         "Mendoza": 638,
         "Misiones": 922 
     }
+
 };
 
 function CalcularCostoEnvio(peso, ancho, alto, provinciaOrigen, provinciaDestino) {
-    // Obtiene la distancia de la tabla de distancias
+    // obtengo la distancia de la tabla de distancias
     const distancia = distancias[provinciaOrigen]?.[provinciaDestino];
 
     const costo = peso * 15 + ancho * 10 + alto * 10 + distancia * 5;
@@ -54,20 +80,19 @@ form.addEventListener("submit", function (event) {
     let provinciaOrigen = document.getElementById("provincia-origen").value;
     let provinciaDestino = document.getElementById("provincia-destino").value;
 
-    // Validación para que no se pueda seleccionar la misma provincia como origen y destino
+    // validación para que no se pueda seleccionar la misma provincia como origen y destino
     if (provinciaOrigen === provinciaDestino) {
         alert("La provincia de origen y destino no pueden ser iguales.");
     } else {
         const costoEnvio = CalcularCostoEnvio(peso, ancho, alto, provinciaOrigen, provinciaDestino);
 
-        // Update font size to trigger the scaling animation
-        costParagraph.style.fontSize = "24px"; // Adjust the font size as needed
+        // animacion del texto que muestra el valor de la cotización
+        costParagraph.style.fontSize = "25px"; 
 
-        // Use setTimeout to reset the font size after the animation
         setTimeout(function () {
-            costParagraph.style.fontSize = "20px"; // Reset to the original font size
-        }, 500); // Adjust the duration (0.5 seconds) to match the transition duration in CSS
-
+            costParagraph.style.fontSize = "20px"; 
+        }, 500); 
+        
         // Muestra el resultado del costo del envío
         costParagraph.textContent = "El costo estimado del envío es de $" + costoEnvio;
 
@@ -78,7 +103,7 @@ form.addEventListener("submit", function (event) {
 
 
 
-// Función para agregar una cotización al historial y almacenarla en LocalStorage
+// fn para agregar una cotización al historial y almacenarla en LocalStorage
 function agregarCotizacionAlHistorial(costoEnvio, provinciaOrigen, provinciaDestino) {
     const historialLista = document.getElementById("historial-lista");
     
@@ -94,7 +119,7 @@ function agregarCotizacionAlHistorial(costoEnvio, provinciaOrigen, provinciaDest
     localStorage.setItem("historial", JSON.stringify(historial));
 }
 
-// Función para cargar el historial desde LocalStorage y mostrarlo en la pag.
+// fn para cargar el historial desde LocalStorage y mostrarlo en la pag.
 function cargarHistorialDesdeLocalStorage() {
     const historialLista = document.getElementById("historial-lista");
 
@@ -108,16 +133,16 @@ function cargarHistorialDesdeLocalStorage() {
     });
 }
 
-// Llamar a la función para cargar el historial al cargar la página
+// llamo a la fn para cargar el historial al cargar la pág
 cargarHistorialDesdeLocalStorage();
 
 const borrarHistorialButton = document.getElementById("borrar-historial");
 
 borrarHistorialButton.addEventListener("click", function () {
-    // Borro el historial en el DOM
+    // borro el historial en el DOM
     historialLista.innerHTML = "";
 
-    // Borro el historial en LStorage
+    // borro el historial en LStorage
     localStorage.removeItem("historial");
 });
 
