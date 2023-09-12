@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/styles.css">
+    <title>Cotizador de Envíos</title>
+</head>
+
+<body>
+    <header>
+        <h1>Cotizador de Envíos</h1>
+    </header>
+
+    
+    <form id="shipping-form">
+        <label for="peso">Peso del Paquete (kg):</label>
+        <input type="number" id="peso" step="0.01" required min="0">
+
+        <label for="ancho">Ancho (cm):</label>
+        <input type="number" id="ancho" required min="0">
+
+        <label for="alto">Altura (cm):</label>
+        <input type="number" id="alto" required min="0">
+
+        <label for="provincia-origen">Provincia de Origen:</label>
+        <select id="provincia-origen">
+            <option value="Buenos Aires">Buenos Aires</option>
+            <option value="Córdoba">Córdoba</option>
+            <option value="Mendoza">Mendoza</option>
+            <option value="Santa Fé">Santa Fé</option>
+            <option value="Chubut">Chubut</option>
+            <option value="Misiones">Misiones</option>
+            <option value="Jujuy">Jujuy</option>
+            
+        </select>
+
+        <label for="provincia-destino">Provincia de Destino:</label>
+        <select id="provincia-destino">
+            <option value="Buenos Aires">Buenos Aires</option>
+            <option value="Córdoba">Córdoba</option>
+            <option value="Mendoza">Mendoza</option>
+            <option value="Santa Fé">Santa Fé</option>
+            <option value="Chubut">Chubut</option>
+            <option value="Misiones">Misiones</option>
+            <option value="Jujuy">Jujuy</option>
+        </select>
+
+        <button type="submit">Calcular Cotización</button>
+    </form>
+
+    <div id="costo-envio">
+    </div>
+
+    <h2>Historial de Cotizaciones</h2>
+    <ul id="historial-lista"></ul>
+
+    <button id="borrar-historial">Borrar Historial</button>
+
+    <div class="footer">
+        <p>Todos los derechos reservados</p>
+    </div>
+
+    <script src="./js/script.js"></script>
+</body>
+
+</html>
