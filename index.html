@@ -12,9 +12,11 @@
     <header>
         <h1>Cotizador de Envíos</h1>
     </header>
-    
-    
+
     <form id="shipping-form">
+        <label for="Nombre">Nombre:</label>
+        <input type="text" id="nombre" step="0.01" required >
+
         <label for="peso">Peso del Paquete (kg):</label>
         <input type="number" id="peso" step="0.01" required min="0">
 
@@ -33,7 +35,6 @@
             <option value="Chubut">Chubut</option>
             <option value="Misiones">Misiones</option>
             <option value="Jujuy">Jujuy</option>
-            
         </select>
 
         <label for="provincia-destino">Provincia de Destino:</label>
@@ -64,5 +65,4 @@
 
     <script src="./js/script.js"></script>
 </body>
-
 </html>

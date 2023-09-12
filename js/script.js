@@ -62,7 +62,6 @@ const distancias = {
 function CalcularCostoEnvio(peso, ancho, alto, provinciaOrigen, provinciaDestino) {
     // obtengo la distancia de la tabla de distancias
     const distancia = distancias[provinciaOrigen]?.[provinciaDestino];
-
     const costo = peso * 15 + ancho * 10 + alto * 10 + distancia * 5;
     return costo;
 }
@@ -74,6 +73,7 @@ const historialLista = document.getElementById("historial-lista");
 form.addEventListener("submit", function (event) {
     event.preventDefault();
 
+    let nombre = document.getElementById("nombre").value;
     let peso = parseFloat(document.getElementById("peso").value);
     let ancho = parseFloat(document.getElementById("ancho").value);
     let alto = parseFloat(document.getElementById("alto").value);
@@ -97,25 +97,28 @@ form.addEventListener("submit", function (event) {
         costParagraph.textContent = "El costo estimado del envío es de $" + costoEnvio;
 
         // Agrego la cotización al historial
-        agregarCotizacionAlHistorial(costoEnvio, provinciaOrigen, provinciaDestino);
+        agregarCotizacionAlHistorial(costoEnvio, provinciaOrigen, provinciaDestino, nombre);
     }
 });
 
-
-
 // fn para agregar una cotización al historial y almacenarla en LocalStorage
-function agregarCotizacionAlHistorial(costoEnvio, provinciaOrigen, provinciaDestino) {
+function agregarCotizacionAlHistorial(costoEnvio, provinciaOrigen, provinciaDestino, nombre) {
     const historialLista = document.getElementById("historial-lista");
     
     const listItem = document.createElement("li");
-    listItem.textContent = `Desde ${provinciaOrigen} a ${provinciaDestino}: $${costoEnvio}`;
+    
+    //  la fecha y hora actual
+    const now = new Date();
+    const formattedDate = now.toLocaleString();
+    
+    listItem.textContent = `Desde ${provinciaOrigen} a ${provinciaDestino}: $${costoEnvio} - ${nombre} - ${formattedDate}`;
     
     historialLista.appendChild(listItem);
-
+    
     let historial = JSON.parse(localStorage.getItem("historial")) || [];
-
-    historial.push({ costoEnvio, provinciaOrigen, provinciaDestino });
-
+    
+    historial.push({ costoEnvio, provinciaOrigen, provinciaDestino, nombre, fecha: formattedDate });
+    
     localStorage.setItem("historial", JSON.stringify(historial));
 }
 
@@ -128,7 +131,7 @@ function cargarHistorialDesdeLocalStorage() {
     // muestro el historial en la página
     historial.forEach((cotizacion) => {
         const listItem = document.createElement("li");
-        listItem.textContent = `Desde ${cotizacion.provinciaOrigen} a ${cotizacion.provinciaDestino}: $${cotizacion.costoEnvio}`;
+        listItem.textContent = `Desde ${cotizacion.provinciaOrigen} a ${cotizacion.provinciaDestino}: $${cotizacion.costoEnvio} - ${cotizacion.nombre} ${cotizacion.fecha} `;
         historialLista.appendChild(listItem);
     });
 }
