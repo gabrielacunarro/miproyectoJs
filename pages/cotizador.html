@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotizador de envíos</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;700&family=Poppins:wght@100;200;600&display=swap"rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+</head>
+
+<body>
+    
+    <header>
+        <h1>Cotizar envío</h1>
+    </header>
+    <!-- formulario de envios-->
+    <form id="shipping-form">
+        <h1>Datos del envío</h1>
+        <input type="number" placeholder="Ingrese el peso del paquete en kg" id="peso" step="0.01" required min="0">
+
+        <input type="number" placeholder="Ingrese el ancho en cm" id="ancho" required min="0">
+
+        <input type="number" placeholder="Ingrese el alto en cm" id="alto" required min="0">
+
+        <label for="provincia-origen">Provincia de Origen:</label>
+        <select id="provincia-origen">
+            <option value="Buenos Aires">Buenos Aires</option>
+            <option value="Córdoba">Córdoba</option>
+            <option value="Mendoza">Mendoza</option>
+            <option value="Santa Fé">Santa Fé</option>
+            <option value="Chubut">Chubut</option>
+            <option value="Misiones">Misiones</option>
+            <option value="Jujuy">Jujuy</option>
+        </select>
+
+        <label for="provincia-destino">Provincia de Destino:</label>
+        <select id="provincia-destino">
+            <option value="Buenos Aires">Buenos Aires</option>
+            <option value="Córdoba">Córdoba</option>
+            <option value="Mendoza">Mendoza</option>
+            <option value="Santa Fé">Santa Fé</option>
+            <option value="Chubut">Chubut</option>
+            <option value="Misiones">Misiones</option>
+            <option value="Jujuy">Jujuy</option>
+        </select>
+
+        <div class="button-container">
+            <button type="submit">Calcular Cotización</button>
+        </div>
+    </form>
+
+    <div id="costo-envio">
+    </div>
+
+    <!-- <h3>Historial de Cotizaciones</h3>
+    <ul id="historial-lista"></ul> 
+
+    <button id="borrar-historial">Borrar Historial</button> -->
+
+    <script src="../js/script2.js"></script>
+</body>
+
+</html>

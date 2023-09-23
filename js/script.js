@@ -1,157 +1,106 @@
-//tabla de km entre destinos-origenes
-const distancias = {
-    "Buenos Aires": {
-        "Chubut": 1730,
-        "Córdoba": 700,
-        "Jujuy": 1526,
-        "Mendoza": 1000,
-        "Misiones": 1150,
-        "Santa Fé": 638
-    },
-    "Chubut": {
-        "Buenos Aires": 1730,
-        "Córdoba": 1817,
-        "Jujuy": 2726,
-        "Mendoza": 1522,
-        "Misiones": 2853,
-        "Santa Fé": 1996
-    },
-    "Córdoba": {
-        "Buenos Aires": 700,
-        "Chubut": 1817,
-        "Jujuy": 901,
-        "Mendoza": 624,
-        "Misiones": 1294,
-        "Santa Fé": 480
-    },
-    "Mendoza": {
-        "Buenos Aires": 1000,
-        "Chubut": 1522,
-        "Córdoba": 624,
-        "Jujuy": 1458,
-        "Misiones": 1978,
-        "Santa Fé": 638
-    },
-    "Misiones": {
-        "Buenos Aires": 1150,
-        "Chubut": 2853,
-        "Córdoba": 1294,
-        "Jujuy": 1365,
-        "Mendoza": 1978,
-        "Santa Fé": 922
-    },
-    "Jujuy": {
-        "Buenos Aires": 1526,
-        "Chubut": 2726,
-        "Córdoba": 901,
-        "Mendoza": 1458,
-        "Misiones": 1365, 
-        "Santa Fé": 1055
-    },
-    "Santa Fé": {
-        "Buenos Aires": 638,
-        "Chubut": 1996,
-        "Córdoba": 480,
-        "Jujuy": 1055,
-        "Mendoza": 638,
-        "Misiones": 922 
-    }
+//FORMULARIO DE INICIO DE SESIÓN/REGISTRO
 
-};
+const btnSigIn = document.getElementById("sign-in");
+const btnSigUp = document.getElementById("sign-up");
+const formRegister = document.querySelector(".register");
+const formLogin = document.querySelector(".login");
 
-function CalcularCostoEnvio(peso, ancho, alto, provinciaOrigen, provinciaDestino) {
-    // obtengo la distancia de la tabla de distancias
-    const distancia = distancias[provinciaOrigen]?.[provinciaDestino];
-    const costo = peso * 15 + ancho * 10 + alto * 10 + distancia * 5;
-    return costo;
-}
+btnSigIn.addEventListener("click", e => {
+    formRegister.classList.add("hide");
+    formLogin.classList.remove("hide");
+})
 
-const form = document.getElementById("shipping-form");
-const costParagraph = document.getElementById("costo-envio");
-const historialLista = document.getElementById("historial-lista");
+btnSigUp.addEventListener("click", e => {
+    formLogin.classList.add("hide");
+    formRegister.classList.remove("hide");
+})
 
-form.addEventListener("submit", function (event) {
-    event.preventDefault();
+// obtengo los elementos del formulario de registro e inicio sesión
+const registerForm = document.querySelector(".container-form.register form");
+const loginForm = document.querySelector(".container-form.login form");
 
-    let nombre = document.getElementById("nombre").value;
-    let peso = parseFloat(document.getElementById("peso").value);
-    let ancho = parseFloat(document.getElementById("ancho").value);
-    let alto = parseFloat(document.getElementById("alto").value);
-    let provinciaOrigen = document.getElementById("provincia-origen").value;
-    let provinciaDestino = document.getElementById("provincia-destino").value;
+// registro de usuario
+registerForm.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-    // validación para que no se pueda seleccionar la misma provincia como origen y destino
-    if (provinciaOrigen === provinciaDestino) {
-        alert("La provincia de origen y destino no pueden ser iguales.");
+    // obtengo los value del formulario de registro
+    const registerUsername = document.querySelector(".container-form.register input[type='text']").value;
+    const registerEmail = document.querySelector(".container-form.register input[type='email']").value;
+    const registerPassword = document.querySelector(".container-form.register input[type='password']").value;
+
+    // verifico si el usuario existe
+    if (localStorage.getItem(registerEmail)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Email ya registrado',
+            text: 'Por favor intente con otro o inicie sesión',
+        })
     } else {
-        const costoEnvio = CalcularCostoEnvio(peso, ancho, alto, provinciaOrigen, provinciaDestino);
-
-        // animacion del texto que muestra el valor de la cotización
-        costParagraph.style.fontSize = "25px"; 
-
-        setTimeout(function () {
-            costParagraph.style.fontSize = "20px"; 
-        }, 500); 
-        
-        // Muestra el resultado del costo del envío
-        costParagraph.textContent = "El costo estimado del envío es de $" + costoEnvio;
-
-        // Agrego la cotización al historial
-        agregarCotizacionAlHistorial(costoEnvio, provinciaOrigen, provinciaDestino, nombre);
+        // guaro el usuario en el LS
+        const userData = {
+            username: registerUsername,
+            password: registerPassword,
+        };
+        localStorage.setItem(registerEmail, JSON.stringify(userData));
+        Swal.fire(
+            'Usuario creado con éxito!',
+            'Bienvenido',
+            'success'
+        );
+        // muestro el form de inicio de sesión
+        showLoginForm();
     }
 });
 
-// fn para agregar una cotización al historial y almacenarla en LocalStorage
-function agregarCotizacionAlHistorial(costoEnvio, provinciaOrigen, provinciaDestino, nombre) {
-    const historialLista = document.getElementById("historial-lista");
-    
-    const listItem = document.createElement("li");
-    
-    //  la fecha y hora actual
-    const now = new Date();
-    const formattedDate = now.toLocaleString();
-    
-    listItem.textContent = `Desde ${provinciaOrigen} a ${provinciaDestino}: $${costoEnvio} - ${nombre} - ${formattedDate}`;
-    
-    historialLista.appendChild(listItem);
-    
-    let historial = JSON.parse(localStorage.getItem("historial")) || [];
-    
-    historial.push({ costoEnvio, provinciaOrigen, provinciaDestino, nombre, fecha: formattedDate });
-    
-    localStorage.setItem("historial", JSON.stringify(historial));
-}
+// inicio de sesión
+loginForm.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-// fn para cargar el historial desde LocalStorage y mostrarlo en la pag.
-function cargarHistorialDesdeLocalStorage() {
-    const historialLista = document.getElementById("historial-lista");
+    // obtengo los valores del formulario de inicio de sesión
+    const loginEmail = document.querySelector(".container-form.login input[type='email']").value;
+    const loginPassword = document.querySelector(".container-form.login input[type='password']").value;
 
-    const historial = JSON.parse(localStorage.getItem("historial")) || [];
-
-    // muestro el historial en la página
-    historial.forEach((cotizacion) => {
-        const listItem = document.createElement("li");
-        listItem.textContent = `Desde ${cotizacion.provinciaOrigen} a ${cotizacion.provinciaDestino}: $${cotizacion.costoEnvio} - ${cotizacion.nombre} ${cotizacion.fecha} `;
-        historialLista.appendChild(listItem);
-    });
-}
-
-// llamo a la fn para cargar el historial al cargar la pág
-cargarHistorialDesdeLocalStorage();
-
-const borrarHistorialButton = document.getElementById("borrar-historial");
-
-borrarHistorialButton.addEventListener("click", function () {
-    // borro el historial en el DOM
-    historialLista.innerHTML = "";
-
-    // borro el historial en LStorage
-    localStorage.removeItem("historial");
+    // chequeo si el usuario existe en LS y si los datos de inicio de sesión son corrects
+    const userData = JSON.parse(localStorage.getItem(loginEmail));
+    if (userData && userData.password === loginPassword) {
+        Swal.fire({
+            title: 'Inicio de sesión exitoso',
+            text: `¡Bienvenido, ${userData.username}!`,
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+        });
+        window.location.href = "/pages/cotizador.html";
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Mail o contraseña incorrectos',
+            text: 'Por favor intente nuevamente',
+        })
+    }
 });
 
+// fn para mostrar el form de inicio de sesión y ocultar el de registro
+function showLoginForm() {
+    const registerContainer = document.querySelector(".container-form.register");
+    const loginContainer = document.querySelector(".container-form.login");
 
+    registerContainer.classList.add("hide");
+    loginContainer.classList.remove("hide");
+}
 
+// fn para mostrar el formulario de registro y ocultar el de inicio de sesión
+function showRegisterForm() {
+    const registerContainer = document.querySelector(".container-form.register");
+    const loginContainer = document.querySelector(".container-form.login");
 
+    registerContainer.classList.remove("hide");
+    loginContainer.classList.add("hide");
+}
 
+// obtengo elementos del botón "Iniciar Sesión" y "Registrarse" + event listeners
+const signInButton = document.getElementById("sign-in");
+const signUpButton = document.getElementById("sign-up");
 
+signInButton.addEventListener("click", showLoginForm);
+signUpButton.addEventListener("click", showRegisterForm);
 

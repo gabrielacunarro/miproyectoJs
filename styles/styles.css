@@ -1,102 +1,297 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
-
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+body{
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: #deedf5;
-}
-
-header {
-    width: 100%;
-    text-align: center;
-    background-color: rgb(129, 187, 250);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    border-radius: 5px;
-}
-
-
-h1 {
-    margin: 10px 0 15px 20px;
-}
-
-/* FORMULARIO */
-form {
-    margin-top: 200px;
-    border: 3px solid #ccc;
-    padding: 20px;
-    background-image: url(../assets/camion.jpg);
-    background-position: center;
+    background-image: url(../assets/fondo_inicio.jpg);
     background-size: cover;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    width: 500px;
+    background-position: 0px;
+}
+
+/* Estilos formularios de registro e inicio de sesión */
+.container-form {
     display: flex;
-    flex-direction: column;
+    border-radius: 20px;
+    box-shadow: 0 5px 7px rgba(0, 0, 0, .1);
+    max-width: 750px;
+    height: 500px;
+    transition: all 1s ease;
+    margin: 10px;
+}
+
+.information {
+    width: 45%;
+    display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    text-align: center;
+    background-color: rgb(204, 238, 248);
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.info-childs{
+    width: 100%;
+    padding: 0 30px;
+}
+
+.info-childs h2 {
+    font-size: 2.5rem;
+    align-items: center;
+}
+
+.info-childs p {
+    margin: 15px 0;
+    color: #555;
+    align-items: center;
     
 }
 
-label {
-    border-radius: 7px;
-    padding: 8px;
-    margin-bottom: 10px;
-}
-
-input {
-    border-radius: 7px;
-    padding: 8px;
-    margin-bottom: 10px;
-    width: 70%
-}
-
-button {
-    margin-top: 25px;
-    padding: 10px;
-    background-color: rgb(119, 181, 246);
-    color: white;
-    border: none;
+.info-childs input {
+    background-color: transparent;
+    outline: none;
+    border: solid 2px rgb(108, 109, 192);
+    border-radius: 20px;
+    padding: 10px 20px;
+    color: rgb(108, 109, 192);
     cursor: pointer;
-    border-radius: 5px;
-    transition: box-shadow 0.3s;
-}
-button:hover {
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); 
+    transition: background-color .3s ease;
 }
 
-#costo-envio {
-    font-size: 20px;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    height: 80%;
-    background-color: rgb(240, 77, 72);
-}
-
-label{
-    font-weight: 800;
+.info-childs input:hover{
+    background-color: rgb(108, 109, 192);
+    border:none;
     color: #fff;
-    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4); 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
 }
 
-select{
-    width: 70%;
-    border-radius: 7px;
-    padding: 8px;
+.form-information {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55%;
+    background-color:rgb(230, 230, 230) ;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.form-information-childs{
+    padding: 0 30px;
+    align-items: center;
+    text-align: center;
+}
+
+.form-information-childs h2 {
+    color: #333;
+    font-size: 2rem;
+    align-items: center;
+}
+.form-information-childs p{
+    color: #555;
+    align-items: center;
+}
+
+.icons {
+    margin: 15px 0;
+}
+
+.icons i{
+    border-radius: 50%;
+    padding: 15px;
+    cursor: pointer;
+    margin:  0 10px;
+    color: rgb(108, 109, 192);
+    border: solid thin rgb(108, 109, 192);
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+}
+
+.icons i:hover {
+    background-color: #c7c7f3;
+    color: #fff;
+}
+
+.form{
+    margin: 30px 0 0 0;
+}
+
+.form label{
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    border-radius: 20px;
+    padding:  0 10px;
+    background-color: #fff;
+    box-shadow:  0 2px 5px rgba(0, 0, 0, .1);
+}
+
+.form label input{
+    width: 100%;
+    padding: 10px;
+    background-color: #fff;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    color: #333;
+}
+
+.form label i{
+color: #a7a7a7;
+}
+
+.form input[type="submit"]{
+    background-color: rgb(108, 109, 192);
+    color: #fff;
+    border-radius: 20px;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow:  0 2px 5px rgba(0, 0, 0, .1);
+}
+
+.form input[type="submit"]:hover{
+    background-color:rgb(89, 91, 167) ;
+}
+
+.hide{
+    position: absolute;
+    transform: translateY(-300%)
+    
+}
+
+/* responsive form */
+
+@media screen and (max-width:750px){
+    html{
+        font-size: 12px;
+    }
+}
+@media screen and (max-width:580px){
+    html{
+        font-size: 10px;
+    }
+
+    .container-form{
+        height: auto;
+        flex-direction: column;
+    }
+
+    .information{
+        width: 100%;
+        padding: 20px;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        border-bottom-left-radius: 0px;
+        
+    }
+    .form-information{
+        width: 100%;
+        padding: 20px;
+        border-bottom-left-radius: 20px;
+        border-top-right-radius: 0px;
+    }
+}
+
+/* ESTILOS DEL FORMULARIO COTIZACION*/
+
+header {
+    position: fixed; 
+    top: 0; 
+    width: 100%; 
+    background-color: transparent; 
+    color: #ffffff; 
+    padding: 20px 0; 
+    text-align: center; 
+    z-index: 1000; 
+}
+
+header h1{
+    font-size: 50px;
+    margin: 0;
+    position: relative;
+}
+header h1::after {
+    content: ''; 
+    display: block; 
+    width: 10%;
+    height: 2px; 
+    background-color: #fff; 
+    margin: 10px auto; 
+}
+
+/* Apply some general styles to the form */
+#shipping-form {
+    width: 30%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow:  0 1px 50px rgba(0, 0, 0, 0.7);
+}
+
+#shipping-form h1{
+    text-align: center;
+}
+
+/* estilos de label */
+#shipping-form label {
+    display: block;
     margin-bottom: 10px;
+    font-weight:600;
+
+}
+#shipping-form input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 15px;
+    border: none;
+    border-bottom: 2px solid #000000; 
+    background-color: transparent; 
+    transition: border-bottom-color 0.3s ease; 
+}
+
+/* estilos de los input focus */
+#shipping-forminput[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+    outline: none; 
+    border-bottom-color: rgb(179, 182, 255); 
+}
+
+/* placeholders */
+#shipping-form input[type="text"]::placeholder,
+input[type="number"]::placeholder,
+select::placeholder {
+    color: #888; 
+}
+
+
+/* btn submit  */
+#shipping-form button[type="submit"] {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: rgb(101, 103, 170);
+    color: #fff;
+}
+.button-container {
+    text-align: center; 
+}
+
+#shipping-form button[type="submit"]:hover {
+    background-color: rgb(68, 71, 173);
 }
 
 
@@ -108,29 +303,14 @@ input[type="number"]::-webkit-outer-spin-button {
     margin: 0;
 }
 
-
-/* FOOTER */
-.footer {
-    width: 100%;
-    height: 100%;
-    background-color: rgb(240, 77, 72);
-    text-align: center;
-    border-radius: 5px;
-}
-
-.footer p {
-    margin: 20px 0 20px;
-}
-
-
-
-/* Estilo para el historial de cotizaciones */
+/* Estilo para el historial de cotizaciones 
 #historial-lista {
+    background-color: #c7c7f3;
     list-style-type: none;
     padding: 0;
 }
 
-#borrar-historial{
+#borrar-historial {
     margin-bottom: 30px;
 }
 
@@ -138,18 +318,14 @@ input[type="number"]::-webkit-outer-spin-button {
     margin-bottom: 5px;
 }
 
-/* animacion div de resultado de la cotización */
-#costo-envio {
+
+ /* animacion div de resultado de la cotización   */
+
+/* #costo-envio {
     font-size: 20px;
     margin-top: 50px;
     margin-bottom: 50px;
     height: 80%;
-    background-color: rgb(240, 77, 72);
-    transition: font-size 0.5s ease-in-out; 
+    transition: font-size 0.5s ease-in-out;
     border-radius: 5px;
-}
-
-
-
-
-
+}  */
