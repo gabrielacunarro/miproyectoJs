@@ -1,71 +1,36 @@
 //FORMULARIO DE COTIZACIÓN
 
-//tabla de km entre destinos-origenes
-const distancias = {
-    "Buenos Aires": {
-        "Chubut": 1730,
-        "Córdoba": 700,
-        "Jujuy": 1526,
-        "Mendoza": 1000,
-        "Misiones": 1150,
-        "Santa Fé": 638
-    },
-    "Chubut": {
-        "Buenos Aires": 1730,
-        "Córdoba": 1817,
-        "Jujuy": 2726,
-        "Mendoza": 1522,
-        "Misiones": 2853,
-        "Santa Fé": 1996
-    },
-    "Córdoba": {
-        "Buenos Aires": 700,
-        "Chubut": 1817,
-        "Jujuy": 901,
-        "Mendoza": 624,
-        "Misiones": 1294,
-        "Santa Fé": 480
-    },
-    "Mendoza": {
-        "Buenos Aires": 1000,
-        "Chubut": 1522,
-        "Córdoba": 624,
-        "Jujuy": 1458,
-        "Misiones": 1978,
-        "Santa Fé": 638
-    },
-    "Misiones": {
-        "Buenos Aires": 1150,
-        "Chubut": 2853,
-        "Córdoba": 1294,
-        "Jujuy": 1365,
-        "Mendoza": 1978,
-        "Santa Fé": 922
-    },
-    "Jujuy": {
-        "Buenos Aires": 1526,
-        "Chubut": 2726,
-        "Córdoba": 901,
-        "Mendoza": 1458,
-        "Misiones": 1365,
-        "Santa Fé": 1055
-    },
-    "Santa Fé": {
-        "Buenos Aires": 638,
-        "Chubut": 1996,
-        "Córdoba": 480,
-        "Jujuy": 1055,
-        "Mendoza": 638,
-        "Misiones": 922
-    }
-
+// coordenadas de las provincias
+const coordenadas = {
+    "Buenos Aires": { latitud: -34.611778, longitud: -58.417301 },
+    "Santa Fé": { latitud: -31.6107, longitud: -61.1990 },
+    "Entre Ríos": { latitud: -32.0583, longitud: -59.2015 },
+    "La Pampa": { latitud: -36.6167, longitud: -64.2833 },
+    "Córdoba": { latitud: -31.420083, longitud: -64.188776 },
+    "Mendoza": {latitud: -32.8894,longitud: -68.8458},
+    "San Juan": {latitud: -31.5375, longitud: -68.5214},
+    "San Luis": {latitud: -33.3022, longitud: -66.3360},
+    "Jujuy": { latitud: -24.1858, longitud: -65.2995},
+    "Salta": { latitud: -24.7829,longitud: -65.4122},
+    "Tucumán": {latitud: -26.8083,longitud: -65.2176},
+    "Catamarca": {latitud: -28.4696,longitud: -65.7843},
+    "Santiago Del Estero": { latitud: -27.7951, longitud: -64.2615},
+    "Misiones": {latitud: -27.4269,longitud: -55.9465},
+    "Corrientes": {latitud: -27.4691,longitud: -58.8309},
+    "Formosa": {latitud: -26.1852,longitud: -58.1754},
+    "Chaco": {latitud: -27.4512,longitud: -59.0097},
+    "Neuquén": {latitud: -38.9516,longitud: -68.0591},
+    "Río Negro": {latitud: -40.4058,longitud: -64.4600},
+    "Chubut": {latitud: -43.7886,longitud: -68.7321},
+    "Santa Cruz": {latitud: -48.8155,longitud: -69.9408},
+    "Tierra del Fuego": {latitud: -54.8069,longitud: -68.3060},
+    "La Rioja": {latitud: -29.4135,longitud: -66.8561}
 };
-
 
 function CalcularCostoEnvio(peso, ancho, alto, provinciaOrigen, provinciaDestino) {
     // obtengo la distancia de la tabla de distancias
-    const distancia = distancias[provinciaOrigen]?.[provinciaDestino];
-    const costo = peso * 15 + ancho * 10 + alto * 10 + distancia * 5;
+    const coordenada = coordenadas[provinciaOrigen]?.[provinciaDestino];
+    const costo = peso * 15 + ancho * 10 + alto * 10 + coordenada * 5;
     return costo;
 }
 // formulario e historial de cotizaciones
@@ -141,7 +106,6 @@ function cargarHistorialDesdeLocalStorage() {
 
 // llamo a la fn para cargar el historial al cargar la pág
 cargarHistorialDesdeLocalStorage();
-
 
 //BORRAR HISTORIAL
 const borrarHistorialButton = document.getElementById("borrar-historial");
