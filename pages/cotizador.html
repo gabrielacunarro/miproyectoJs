@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cotizador de envíos</title>
     <link rel="stylesheet" href="../styles/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;700&family=Poppins:wght@100;200;600&display=swap"rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;700&family=Poppins:wght@100;200;600&display=swap"
+        rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 </head>
-
 <body>
-    
     <header>
         <h1>Cotizar envío</h1>
     </header>
+    <div class="contenedor-form">
     <!-- formulario de envios-->
     <form id="shipping-form">
         <h1>Datos del envío</h1>
@@ -27,39 +30,71 @@
         <label for="provincia-origen">Provincia de Origen:</label>
         <select id="provincia-origen">
             <option value="Buenos Aires">Buenos Aires</option>
+            <option value="Santa Fé">Santa Fé</option>
+            <option value="Entre Ríos">Entre Ríos</option>
+            <option value="La Pampa">La Pampa</option>
             <option value="Córdoba">Córdoba</option>
             <option value="Mendoza">Mendoza</option>
-            <option value="Santa Fé">Santa Fé</option>
-            <option value="Chubut">Chubut</option>
-            <option value="Misiones">Misiones</option>
+            <option value="San Juan">San Juan</option>
+            <option value="San Luis">San Luis</option>
             <option value="Jujuy">Jujuy</option>
+            <option value="Salta">Salta</option>
+            <option value="Tucumán">Tucumán</option>
+            <option value="Catamarca">Catamarca</option>
+            <option value="Santiago Del Estero">Santiago Del Estero</option>
+            <option value="Misiones">Misiones</option>
+            <option value="Corrientes">Corrientes</option>
+            <option value="Formosa">Formosa</option>
+            <option value="Chaco">Chaco</option>
+            <option value="Neuquén">Neuquén</option>
+            <option value="Río Negro">Río Negro</option>
+            <option value="Chubut">Chubut</option>
+            <option value="Santa Cruz">Santa Cruz</option>
+            <option value="Tierra del Fuego">Tierra del Fuego</option>
+            <option value="La Rioja">La Rioja</option>
         </select>
 
         <label for="provincia-destino">Provincia de Destino:</label>
         <select id="provincia-destino">
             <option value="Buenos Aires">Buenos Aires</option>
+            <option value="Santa Fé">Santa Fé</option>
+            <option value="Entre Ríos">Entre Ríos</option>
+            <option value="La Pampa">La Pampa</option>
             <option value="Córdoba">Córdoba</option>
             <option value="Mendoza">Mendoza</option>
-            <option value="Santa Fé">Santa Fé</option>
-            <option value="Chubut">Chubut</option>
-            <option value="Misiones">Misiones</option>
+            <option value="San Juan">San Juan</option>
+            <option value="San Luis">San Luis</option>
             <option value="Jujuy">Jujuy</option>
+            <option value="Salta">Salta</option>
+            <option value="Tucumán">Tucumán</option>
+            <option value="Catamarca">Catamarca</option>
+            <option value="Santiago Del Estero">Santiago Del Estero</option>
+            <option value="Misiones">Misiones</option>
+            <option value="Corrientes">Corrientes</option>
+            <option value="Formosa">Formosa</option>
+            <option value="Chaco">Chaco</option>
+            <option value="Neuquén">Neuquén</option>
+            <option value="Río Negro">Río Negro</option>
+            <option value="Chubut">Chubut</option>
+            <option value="Santa Cruz">Santa Cruz</option>
+            <option value="Tierra del Fuego">Tierra del Fuego</option>
+            <option value="La Rioja">La Rioja</option>
         </select>
 
         <div class="button-container">
             <button type="submit">Calcular Cotización</button>
         </div>
     </form>
-
-    <div id="costo-envio">
-    </div>
-
-     <h3>Historial de Cotizaciones</h3>
-    <ul id="historial-lista"></ul> 
-
-    <button id="borrar-historial">Borrar Historial</button> 
+</div>
+    <div id="contenedor-below">
+        <div id="costo-envio">
+        </div>
+        <h3>Historial de Cotizaciones</h3>
+        <ul id="historial-lista">
+        </ul>
+        <button id="borrar-historial">Borrar Historial</button>
+    </div> 
 
     <script src="../js/script2.js"></script>
 </body>
-
 </html>

@@ -1,9 +1,9 @@
-* {
+ * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
-}
+} 
 
 body{
     display: flex;
@@ -225,10 +225,15 @@ header h1::after {
     background-color: #fff; 
     margin: 10px auto; 
 }
+/* DIV FORMULARIO*/
 
+#contenedor-form{
+    display: block;
+    width: 100%;
+}
 /* Apply some general styles to the form */
 #shipping-form {
-    width: 30%;
+    width: 80%;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
@@ -294,7 +299,6 @@ select::placeholder {
     background-color: rgb(68, 71, 173);
 }
 
-
 /*  ocultar las flechas */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
@@ -303,29 +307,34 @@ input[type="number"]::-webkit-outer-spin-button {
     margin: 0;
 }
 
-/* Estilo para el historial de cotizaciones 
+#contenedor-below{
+    
+    display: block;
+    width: 500PX;
+    height: 100PX;
+    background-color: aliceblue;
+}
+
+/* Estilos para el costo de envío y el historial */
+/* #costo-envio,
 #historial-lista {
     background-color: #c7c7f3;
-    list-style-type: none;
-    padding: 0;
-}
-
-#borrar-historial {
-    margin-bottom: 30px;
-}
-
-#historial-lista li {
-    margin-bottom: 5px;
-}
-
-
- /* animacion div de resultado de la cotización   */
-
-/* #costo-envio {
-    font-size: 20px;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    height: 80%;
-    transition: font-size 0.5s ease-in-out;
+    padding: 10px;
     border-radius: 5px;
-}  */
+    margin-bottom: 10px; /* Espacio entre los elementos 
+} */
+
+/* Estilos para el botón de borrar historial */
+/* #borrar-historial {
+    background-color: rgb(240, 77, 72);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+} */
+
+
+
+
+

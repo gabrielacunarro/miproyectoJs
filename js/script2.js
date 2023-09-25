@@ -1,36 +1,52 @@
 //FORMULARIO DE COTIZACIÓN
 
 // coordenadas de las provincias
-const coordenadas = {
-    "Buenos Aires": { latitud: -34.611778, longitud: -58.417301 },
-    "Santa Fé": { latitud: -31.6107, longitud: -61.1990 },
-    "Entre Ríos": { latitud: -32.0583, longitud: -59.2015 },
-    "La Pampa": { latitud: -36.6167, longitud: -64.2833 },
-    "Córdoba": { latitud: -31.420083, longitud: -64.188776 },
-    "Mendoza": {latitud: -32.8894,longitud: -68.8458},
-    "San Juan": {latitud: -31.5375, longitud: -68.5214},
-    "San Luis": {latitud: -33.3022, longitud: -66.3360},
-    "Jujuy": { latitud: -24.1858, longitud: -65.2995},
-    "Salta": { latitud: -24.7829,longitud: -65.4122},
-    "Tucumán": {latitud: -26.8083,longitud: -65.2176},
-    "Catamarca": {latitud: -28.4696,longitud: -65.7843},
-    "Santiago Del Estero": { latitud: -27.7951, longitud: -64.2615},
-    "Misiones": {latitud: -27.4269,longitud: -55.9465},
-    "Corrientes": {latitud: -27.4691,longitud: -58.8309},
-    "Formosa": {latitud: -26.1852,longitud: -58.1754},
-    "Chaco": {latitud: -27.4512,longitud: -59.0097},
-    "Neuquén": {latitud: -38.9516,longitud: -68.0591},
-    "Río Negro": {latitud: -40.4058,longitud: -64.4600},
-    "Chubut": {latitud: -43.7886,longitud: -68.7321},
-    "Santa Cruz": {latitud: -48.8155,longitud: -69.9408},
-    "Tierra del Fuego": {latitud: -54.8069,longitud: -68.3060},
-    "La Rioja": {latitud: -29.4135,longitud: -66.8561}
+// const coordenadas = {
+//     "Buenos Aires": { latitud: -34.611778, longitud: -58.417301 },
+//     "Santa Fé": { latitud: -31.6107, longitud: -61.1990 },
+//     "Entre Ríos": { latitud: -32.0583, longitud: -59.2015 },
+//     "La Pampa": { latitud: -36.6167, longitud: -64.2833 },
+//     "Córdoba": { latitud: -31.420083, longitud: -64.188776 },
+//     "Mendoza": {latitud: -32.8894,longitud: -68.8458},
+//     "San Juan": {latitud: -31.5375, longitud: -68.5214},
+//     "San Luis": {latitud: -33.3022, longitud: -66.3360},
+//     "Jujuy": { latitud: -24.1858, longitud: -65.2995},
+//     "Salta": { latitud: -24.7829,longitud: -65.4122},
+//     "Tucumán": {latitud: -26.8083,longitud: -65.2176},
+//     "Catamarca": {latitud: -28.4696,longitud: -65.7843},
+//     "Santiago Del Estero": { latitud: -27.7951, longitud: -64.2615},
+//     "Misiones": {latitud: -27.4269,longitud: -55.9465},
+//     "Corrientes": {latitud: -27.4691,longitud: -58.8309},
+//     "Formosa": {latitud: -26.1852,longitud: -58.1754},
+//     "Chaco": {latitud: -27.4512,longitud: -59.0097},
+//     "Neuquén": {latitud: -38.9516,longitud: -68.0591},
+//     "Río Negro": {latitud: -40.4058,longitud: -64.4600},
+//     "Chubut": {latitud: -43.7886,longitud: -68.7321},
+//     "Santa Cruz": {latitud: -48.8155,longitud: -69.9408},
+//     "Tierra del Fuego": {latitud: -54.8069,longitud: -68.3060},
+//     "La Rioja": {latitud: -29.4135,longitud: -66.8561}
+// };
+
+const options = {
+	method: 'GET',
 };
 
-function CalcularCostoEnvio(peso, ancho, alto, provinciaOrigen, provinciaDestino) {
-    // obtengo la distancia de la tabla de distancias
-    const coordenada = coordenadas[provinciaOrigen]?.[provinciaDestino];
-    const costo = peso * 15 + ancho * 10 + alto * 10 + coordenada * 5;
+fetch("https://maps.googleapis.com/maps/api/distancematrix/json?origins=buenos aires&destinations=tucuman&units=imperial&key=AIzaSyA6at2YXySRNeYiijvzEkj5dcOG-8mzV-4", options)
+.then(res => res.json())
+.then(response=>{
+    console.log(response)
+})
+// Función para calcular la distancia entre dos coordenadas geográficas
+function calcularDistancia(coordenadaOrigen, coordenadaDestino) {
+    const puntoOrigen = new google.maps.LatLng(coordenadaOrigen.latitud, coordenadaOrigen.longitud);
+    const puntoDestino = new google.maps.LatLng(coordenadaDestino.latitud, coordenadaDestino.longitud);
+    const distancia = google.maps.geometry.spherical.computeDistanceBetween(puntoOrigen, puntoDestino)/1000;
+    
+    return distancia;
+}
+
+function CalcularCostoEnvio(peso, ancho, alto, coordenadaOrigen, coordenadaDestino) {
+    const costo = peso * 15 + ancho * 10 + alto * 10 + calcularDistancia(coordenadaOrigen, coordenadaDestino) * 5;
     return costo;
 }
 // formulario e historial de cotizaciones
@@ -48,6 +64,10 @@ form.addEventListener("submit", function (event) {
     let provinciaOrigen = document.getElementById("provincia-origen").value;
     let provinciaDestino = document.getElementById("provincia-destino").value;
 
+    // obtener coordenadas de las prov seleccionadas
+    const coordenadaOrigen = coordenadas[provinciaOrigen];
+    const coordenadaDestino = coordenadas[provinciaDestino];
+
     // validación para que no se pueda seleccionar la misma provincia como origen y destino
     if (provinciaOrigen === provinciaDestino) {
         Swal.fire({
@@ -56,7 +76,7 @@ form.addEventListener("submit", function (event) {
             text: 'El origen y destino no pueden ser el mismo',
         });
     } else {
-        const costoEnvio = CalcularCostoEnvio(peso, ancho, alto, provinciaOrigen, provinciaDestino);
+        const costoEnvio = CalcularCostoEnvio(peso, ancho, alto, coordenadaOrigen, coordenadaDestino);
 
         // animacion del texto que muestra el valor de la cotización
         costParagraph.style.fontSize = "25px";
@@ -71,7 +91,7 @@ form.addEventListener("submit", function (event) {
     }
 });
 // fn para agregar una cotización al historial y almacenarla en LocalStorage
-function agregarCotizacionAlHistorial(costoEnvio, provinciaOrigen, provinciaDestino) {
+    function agregarCotizacionAlHistorial(costoEnvio, provinciaOrigen, provinciaDestino) {
     const historialLista = document.getElementById("historial-lista");
     const listItem = document.createElement("li");
 
@@ -131,7 +151,7 @@ borrarHistorialButton.addEventListener("click", function () {
             // Borrar el historial en el DOM
             historialLista.innerHTML = '';
 
-            // Borrar el historial en LocalStorage
+            // Borrar el historial en LS
             localStorage.removeItem('historial');
 
             Swal.fire(
@@ -142,9 +162,4 @@ borrarHistorialButton.addEventListener("click", function () {
         }
     });
 });
-
-
-
-
-
 
