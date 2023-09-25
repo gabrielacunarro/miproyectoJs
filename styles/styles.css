@@ -316,23 +316,23 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 /* Estilos para el costo de envío y el historial */
-/* #costo-envio,
+#costo-envio,
 #historial-lista {
     background-color: #c7c7f3;
     padding: 10px;
     border-radius: 5px;
-    margin-bottom: 10px; /* Espacio entre los elementos 
-} */
+    margin-bottom: 10px; 
+} 
 
 /* Estilos para el botón de borrar historial */
-/* #borrar-historial {
+#borrar-historial {
     background-color: rgb(240, 77, 72);
     color: #fff;
     border: none;
     border-radius: 5px;
     padding: 10px 15px;
     cursor: pointer;
-} */
+} 
 
 
 
