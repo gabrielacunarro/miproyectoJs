@@ -1,18 +1,6 @@
 //FORMULARIO DE COTIZACIÓN
-document.addEventListener("DOMContentLoaded", function() {
-    fetch("coordenadas.json")
-        .then(response => response.json()) // Cargamos el archivo como JSON
-        .then(data => {
-            // El contenido de "coordenadas.json" se carga como un objeto JavaScript
-            const coordenadas = data;
-            
-            // Ahora puedes utilizar las coordenadas en tu código
-            console.log(coordenadas);
-        })
-        .catch(error => {
-            alert("Error al cargar las coordenadas:", error);
-        });
-});
+
+    
 // Función para calcular la distancia entre dos coordenadas geográficas
 function haversineDistancia(lat1, lon1, lat2, lon2) {
     const R = 6371; // Radio de la Tierra en kilómetros
@@ -49,31 +37,40 @@ form.addEventListener("submit", function (event) {
     let provinciaOrigen = document.getElementById("provincia-origen").value;
     let provinciaDestino = document.getElementById("provincia-destino").value;
 
-    // obtener coordenadas de las prov seleccionadas
-    const coordenadaOrigen = coordenadas[provinciaOrigen];
-    const coordenadaDestino = coordenadas[provinciaDestino];
+    //fetch
+    const url = 'coordenadas.json';
+    fetch(url)
+        .then(response => response.json())
+        .then(coordenadas => {
+            // obtener coordenadas de las provincias seleccionadas
+            const coordenadaOrigen = coordenadas[provinciaOrigen];
+            const coordenadaDestino = coordenadas[provinciaDestino];
 
-    // validación para que no se pueda seleccionar la misma provincia como origen y destino
-    if (provinciaOrigen === provinciaDestino) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Error en el ingreso de datos',
-            text: 'El origen y destino no pueden ser el mismo',
+            // validación para que no se pueda seleccionar la misma provincia como origen y destino
+            if (provinciaOrigen === provinciaDestino) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error en el ingreso de datos',
+                    text: 'El origen y destino no pueden ser el mismo',
+                });
+            } else {
+                const costoEnvio = CalcularCostoEnvio(peso, ancho, alto, coordenadaOrigen, coordenadaDestino);
+
+                // animación del texto que muestra el valor de la cotización
+                costParagraph.style.fontSize = "25px";
+
+                setTimeout(function () {
+                    costParagraph.style.fontSize = "20px";
+                }, 500);
+
+                // Muestra el resultado del costo del envío y agrega la cotización al historial
+                costParagraph.textContent = "El costo estimado del envío es de $" + costoEnvio;
+                agregarCotizacionAlHistorial(costoEnvio, provinciaOrigen, provinciaDestino);
+            }
+        })
+        .catch(error => {
+            alert("Error al cargar las coordenadas: " + error.message);
         });
-    } else {
-        const costoEnvio = CalcularCostoEnvio(peso, ancho, alto, coordenadaOrigen, coordenadaDestino);
-
-        // animacion del texto que muestra el valor de la cotización
-        costParagraph.style.fontSize = "25px";
-
-        setTimeout(function () {
-            costParagraph.style.fontSize = "20px";
-        }, 500);
-
-        // Muestra el resultado del costo del envío y agrego la coti al historial
-        costParagraph.textContent = "El costo estimado del envío es de $" + costoEnvio;
-        agregarCotizacionAlHistorial(costoEnvio, provinciaOrigen, provinciaDestino);
-    }
 });
 
 // fn para agregar una cotización al historial y almacenarla en LocalStorage
