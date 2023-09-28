@@ -168,7 +168,6 @@ form.addEventListener("submit", function (event) {
 
     // Muestra el resultado del costo del envío y agrega la cotización al historial
     costParagraph.textContent = "El costo estimado del envío es de $" + costoEnvio;
-    agregarCotizacionAlHistorial(costoEnvio, provinciaOrigen, provinciaDestino);
 });
 
 // fn para agregar una cotización al historial y almacenarla en LocalStorage
