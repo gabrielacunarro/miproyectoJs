@@ -1,6 +1,6 @@
-//FORMULARIO DE COTIZACIÓN
 
-    
+//////////////////////FORMULARIO DE COTIZACIÓN////////////////////////////////////
+
 // Función para calcular la distancia entre dos coordenadas geográficas
 function haversineDistancia(lat1, lon1, lat2, lon2) {
     const R = 6371; // Radio de la Tierra en kilómetros
@@ -18,11 +18,131 @@ function haversineDistancia(lat1, lon1, lat2, lon2) {
     return distancia;
 }
 
-function CalcularCostoEnvio(peso, ancho, alto, coordenadaOrigen, coordenadaDestino) {
-    const costo = peso * 15 + ancho * 10 + alto * 10 + haversineDistancia(coordenadaOrigen.latitud, coordenadaOrigen.longitud, coordenadaDestino.latitud, coordenadaDestino.longitud) * 5;
-    return costo.toFixed(2);
+// Función para calcular la distancia entre dos provincias seleccionadas
+function calcularDistanciaEntreProvincias() {
+    // Obtener las provincias seleccionadas
+    const provinciaOrigen = document.getElementById('provincia-origen').value;
+    const provinciaDestino = document.getElementById('provincia-destino').value;
+
+    // Realizar la solicitud fetch para obtener el archivo JSON de coordenadas
+    fetch('../data/coordenadas.json') // Ajusta la ruta según sea necesario
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            // Obtener las coordenadas de las provincias seleccionadas
+            const coordenadasOrigen = data[provinciaOrigen];
+            const coordenadasDestino = data[provinciaDestino];
+
+            if (!coordenadasOrigen || !coordenadasDestino) {
+                // Manejar errores si las coordenadas no están definidas
+                console.error('Coordenadas no definidas para una o ambas provincias seleccionadas');
+                return;
+            }
+
+            // Calcular la distancia entre las provincias utilizando la función haversineDistancia
+            const distancia = haversineDistancia(
+                coordenadasOrigen.latitud,
+                coordenadasOrigen.longitud,
+                coordenadasDestino.latitud,
+                coordenadasDestino.longitud
+            );
+
+            // Mostrar la distancia en algún lugar de tu página (por ejemplo, en un div con id "costo-envio")
+            const costoEnvioElement = document.getElementById('costo-envio');
+            costoEnvioElement.innerHTML = `La distancia entre ${provinciaOrigen} y ${provinciaDestino} es de ${distancia.toFixed(2)} km.`;
+        })
+        .catch(error => {
+            console.error('Ha ocurrido un error al obtener los datos:', error);
+        });
 }
-// formulario e historial de cotizaciones
+
+// Obtener los elementos select
+const selectProvinciaOrigen = document.getElementById('provincia-origen');
+const selectProvinciaDestino = document.getElementById('provincia-destino');
+
+// Función para llenar los select con las opciones del JSON
+function llenarSelectConProvincias() {
+    fetch('coordenadas.json') // Ajusta la ruta según sea necesario
+        .then(response => response.json())
+        .then(data => {
+            // Iterar a través de las provincias en el JSON y llenar los select
+            for (const provincia in data.coordenadas) {
+                if (data.coordenadas.hasOwnProperty(provincia)) {
+                    // Crear una opción para el select de origen
+                    const optionOrigen = document.createElement('option');
+                    optionOrigen.value = provincia;
+                    optionOrigen.textContent = provincia;
+                    
+                    // Crear una opción para el select de destino
+                    const optionDestino = document.createElement('option');
+                    optionDestino.value = provincia;
+                    optionDestino.textContent = provincia;
+
+                    // Agregar las opciones a los select
+                    selectProvinciaOrigen.appendChild(optionOrigen);
+                    selectProvinciaDestino.appendChild(optionDestino);
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Ha ocurrido un error al obtener los datos:', error);
+        });
+}
+
+// Llenar los select cuando se carga la página
+llenarSelectConProvincias();
+
+
+// Función para calcular el costo de envío
+function CalcularCostoEnvio(peso, ancho, alto, provinciaOrigen, provinciaDestino) {
+    // Obtener las coordenadas del JSON de coordenadas
+    fetch('../data/coordenadas.json')
+        .then(res => res.json())
+        .then(data => {
+            const coordenadas = data.coordenadas;
+            const coordenadaOrigen = coordenadas[provinciaOrigen];
+            const coordenadaDestino = coordenadas[provinciaDestino];
+
+            // Validación para que no se pueda seleccionar la misma provincia como origen y destino
+            if (provinciaOrigen === provinciaDestino) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error en el ingreso de datos',
+                    text: 'El origen y destino no pueden ser el mismo',
+                });
+                return 0; // Devolvemos 0 como costo si hay un error
+            }
+
+            // Calcular la distancia entre las provincias utilizando la función haversineDistancia
+            const distancia = haversineDistancia(
+                coordenadaOrigen.latitud,
+                coordenadaOrigen.longitud,
+                coordenadaDestino.latitud,
+                coordenadaDestino.longitud
+            );
+
+            // Calcular el costo
+            const costo = peso * 15 + ancho * 10 + alto * 10 + distancia * 5;
+
+            // Mostrar el resultado en algún lugar de tu página (por ejemplo, en un div con id "costo-envio")
+            const costParagraph = document.getElementById('costo-envio');
+            costParagraph.style.fontSize = "25px";
+
+            setTimeout(function () {
+                costParagraph.style.fontSize = "20px";
+            }, 500);
+
+            costParagraph.textContent = "El costo estimado del envío es de $" + costo.toFixed(2);
+            
+            // Agregar la cotización al historial
+            agregarCotizacionAlHistorial(costo.toFixed(2), provinciaOrigen, provinciaDestino);
+        })
+        .catch(error => {
+            console.error('Ha ocurrido un error al obtener los datos:', error);
+        });
+}
+
+//formulario e historial de cotizaciones
 const form = document.getElementById("shipping-form");
 const costParagraph = document.getElementById("costo-envio");
 const historialLista = document.getElementById("historial-lista");
@@ -37,40 +157,18 @@ form.addEventListener("submit", function (event) {
     let provinciaOrigen = document.getElementById("provincia-origen").value;
     let provinciaDestino = document.getElementById("provincia-destino").value;
 
-    //fetch
-    const url = 'coordenadas.json';
-    fetch(url)
-        .then(response => response.json())
-        .then(coordenadas => {
-            // obtener coordenadas de las provincias seleccionadas
-            const coordenadaOrigen = coordenadas[provinciaOrigen];
-            const coordenadaDestino = coordenadas[provinciaDestino];
+    const costoEnvio = CalcularCostoEnvio(peso, ancho, alto, provinciaOrigen, provinciaDestino);
 
-            // validación para que no se pueda seleccionar la misma provincia como origen y destino
-            if (provinciaOrigen === provinciaDestino) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error en el ingreso de datos',
-                    text: 'El origen y destino no pueden ser el mismo',
-                });
-            } else {
-                const costoEnvio = CalcularCostoEnvio(peso, ancho, alto, coordenadaOrigen, coordenadaDestino);
+    // animacion del texto que muestra el valor de la cotización
+    costParagraph.style.fontSize = "25px";
 
-                // animación del texto que muestra el valor de la cotización
-                costParagraph.style.fontSize = "25px";
+    setTimeout(function () {
+        costParagraph.style.fontSize = "20px";
+    }, 500);
 
-                setTimeout(function () {
-                    costParagraph.style.fontSize = "20px";
-                }, 500);
-
-                // Muestra el resultado del costo del envío y agrega la cotización al historial
-                costParagraph.textContent = "El costo estimado del envío es de $" + costoEnvio;
-                agregarCotizacionAlHistorial(costoEnvio, provinciaOrigen, provinciaDestino);
-            }
-        })
-        .catch(error => {
-            alert("Error al cargar las coordenadas: " + error.message);
-        });
+    // Muestra el resultado del costo del envío y agrega la cotización al historial
+    costParagraph.textContent = "El costo estimado del envío es de $" + costoEnvio;
+    agregarCotizacionAlHistorial(costoEnvio, provinciaOrigen, provinciaDestino);
 });
 
 // fn para agregar una cotización al historial y almacenarla en LocalStorage
