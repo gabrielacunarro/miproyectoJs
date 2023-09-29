@@ -1,0 +1,152 @@
+
+/* ESTILOS DEL FORMULARIO COTIZACION*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+} 
+
+/* Estilos generales */
+body {
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+    background-image: url(../assets/fondo_inicio.jpg);
+    background-size: cover;
+    background-position: 0px;
+}
+
+header {
+    width: 100%; 
+    background-color: transparent; 
+    color: #ffffff; 
+    padding: 20px 0; 
+    text-align: center; 
+}
+
+header h1{
+    font-size: 40px;
+    margin: 0;
+    position: relative;
+}
+header h1::after {
+    content: ''; 
+    display: block; 
+    width: 10%;
+    height: 2px; 
+    background-color: #fff; 
+    margin: 10px auto; 
+}
+
+h1 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.contenedor-form {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    margin: 0 auto; 
+    max-width: 650px; 
+    width: 100%; 
+    margin-bottom: 30px;
+}
+
+.contenedor-form h1 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.contenedor-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.contenedor-form input[type="number"],
+.contenedor-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgb(108, 109, 192);
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.contenedor-form .button-container {
+    text-align: center;
+}
+
+.contenedor-form button[type="submit"] {
+    background-color: rgb(108, 109, 192);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#shipping-form button[type="submit"]:hover {
+    background-color: #555; /* Cambia el color de fondo en hover */
+    color: #fff; /* Cambia el color del texto en hover */
+}
+
+
+#contenedor-below {
+    text-align: center;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    margin: 0 auto; /* Centra horizontalmente */
+    max-width: 700px; /* Cambia este valor según tus preferencias */
+    width: 100%; /* Hace que el contenedor sea responsivo */
+}
+
+#costo-envio{
+    transition: font-size 1s ease;
+    font-weight: 700;
+    background-color: rgb(137, 137, 230);
+    padding: 30px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+#historial-lista {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    list-style-type: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+#historial-lista h3{
+    padding-bottom: 10px;
+    text-decoration: underline;
+}
+
+#borrar-historial {
+    background-color: #d9534f;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#borrar-historial:hover {
+    background-color: #c9302c;
+}
+
+/*  ocultar las flechas */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+}
