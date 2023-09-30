@@ -1,4 +1,4 @@
-//FORMULARIO DE INICIO DE SESIÓN/REGISTRO
+// FORMULARIO DE INICIO DE SESIÓN/REGISTRO
 
 const btnSigIn = document.getElementById("sign-in");
 const btnSigUp = document.getElementById("sign-up");
@@ -24,21 +24,28 @@ registerForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
     // obtengo los value del formulario de registro
-    const registerUsername = document.querySelector(".container-form.register input[type='text']").value;
     const registerEmail = document.querySelector(".container-form.register input[type='email']").value;
     const registerPassword = document.querySelector(".container-form.register input[type='password']").value;
+    const confirmPassword = document.querySelector(".container-form.register input[type='password'][placeholder='Confirmar contraseña']").value;
 
-    // verifico si el usuario existe
+    // verifico si el email ya está registrado
     if (localStorage.getItem(registerEmail)) {
         Swal.fire({
             icon: 'error',
             title: 'Email ya registrado',
             text: 'Por favor intente con otro o inicie sesión',
-        })
+        });
+    } else if (registerPassword !== confirmPassword) {
+        // Verificar si las contraseñas no coinciden
+        Swal.fire({
+            icon: 'error',
+            title: 'Las contraseñas no coinciden',
+            text: 'Por favor, asegúrese de que las contraseñas coincidan',
+        });
     } else {
-        // guaro el usuario en el LS
+        // guardar el usuario en el LocalStorage
         const userData = {
-            username: registerUsername,
+            email: registerEmail,
             password: registerPassword,
         };
         localStorage.setItem(registerEmail, JSON.stringify(userData));
@@ -47,7 +54,7 @@ registerForm.addEventListener("submit", function (e) {
             'Bienvenido',
             'success'
         );
-        // muestro el form de inicio de sesión
+        // mostrar el formulario de inicio de sesión
         showLoginForm();
     }
 });
@@ -60,10 +67,10 @@ loginForm.addEventListener("submit", function (e) {
     const loginEmail = document.querySelector(".container-form.login input[type='email']").value;
     const loginPassword = document.querySelector(".container-form.login input[type='password']").value;
 
-    // chequeo si el usuario existe en LS y si los datos de inicio de sesión son corrects
+    // chequeo si el usuario existe en el LocalStorage y si los datos de inicio de sesión son correctos
     const userData = JSON.parse(localStorage.getItem(loginEmail));
     if (userData && userData.password === loginPassword) {
-
+        // Redirige al usuario a la página de cotización después de iniciar sesión con éxito
         window.location.href = "/pages/cotizador.html";
     } else {
         Swal.fire({
@@ -74,7 +81,7 @@ loginForm.addEventListener("submit", function (e) {
     }
 });
 
-// fn para mostrar el form de inicio de sesión y ocultar el de registro
+// función para mostrar el formulario de inicio de sesión y ocultar el de registro
 function showLoginForm() {
     const registerContainer = document.querySelector(".container-form.register");
     const loginContainer = document.querySelector(".container-form.login");
@@ -83,7 +90,7 @@ function showLoginForm() {
     loginContainer.classList.remove("hide");
 }
 
-// fn para mostrar el formulario de registro y ocultar el de inicio de sesión
+// función para mostrar el formulario de registro y ocultar el de inicio de sesión
 function showRegisterForm() {
     const registerContainer = document.querySelector(".container-form.register");
     const loginContainer = document.querySelector(".container-form.login");
@@ -91,7 +98,6 @@ function showRegisterForm() {
     registerContainer.classList.remove("hide");
     loginContainer.classList.add("hide");
 }
-
 // obtengo elementos del botón "Iniciar Sesión" y "Registrarse" + event listeners
 const signInButton = document.getElementById("sign-in");
 const signUpButton = document.getElementById("sign-up");

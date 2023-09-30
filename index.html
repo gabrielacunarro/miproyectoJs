@@ -9,16 +9,20 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;700&family=Poppins:wght@100;200;600&display=swap"rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;700&family=Poppins:wght@100;200;600&display=swap"
+        rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
 <body>
     <!-- form registro -->
     <div class="container-form register">
         <div class="information">
             <div class="info-childs">
-                <h2>Bienvenido</h2>
+                <h2>Bienvenido a ShipWise</h2>
                 <p>Para cotizar envíos por favor inicia sesión </p>
                 <input type="button" value="Iniciar Sesión" id="sign-in">
             </div>
@@ -34,16 +38,16 @@
                 <p>O utiliza tu email para registrarte</p>
                 <form class="form">
                     <label>
-                        <i class='bx bx-user'></i>
-                        <input type="text" placeholder="Nombre Completo" id="">
-                    </label>
-                    <label>
                         <i class='bx bx-envelope'></i>
-                        <input type="email" placeholder="Correo">
+                        <input type="email" placeholder="Correo" required>
                     </label>
                     <label>
                         <i class='bx bx-lock-alt'></i>
-                        <input type="password" placeholder="Contraseña">
+                        <input type="password" placeholder="Contraseña" required>
+                    </label>
+                    <label>
+                        <i class='bx bx-lock-alt'></i>
+                        <input type="password" placeholder="Confirmar contraseña" required>
                     </label>
                     <input type="submit" value="Registrarse">
                 </form>
@@ -72,11 +76,11 @@
                 <form class="form">
                     <label>
                         <i class='bx bx-envelope'></i>
-                        <input type="email" placeholder="Correo">
+                        <input type="email" placeholder="Correo" required>
                     </label>
                     <label>
                         <i class='bx bx-lock-alt'></i>
-                        <input type="password" placeholder="Contraseña">
+                        <input type="password" placeholder="Contraseña" required>
                     </label>
                     <input type="submit" value="Iniciar Sesión">
                 </form>
